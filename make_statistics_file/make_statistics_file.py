@@ -34,13 +34,13 @@ def make_stats_file(path, GridX, GridY, output):
                         timeseries = np.append(timeseries, f['Results'][group][time][-1, GridX, GridY])
                     else:
                         timeseries = np.append(timeseries, f['Results'][group][time][GridX, GridY])
-                stats_dict[group] = {'mean': str(np.mean(timeseries)), 
-                                     'min': str(np.min(timeseries)),
-                                     'max': str(np.max(timeseries)), 
-                                     'std': str(np.std(timeseries))}
+                stats_dict[group] = {'min': "%.4g" % np.min(timeseries),
+                                     'max': "%.4g" % np.max(timeseries),
+                                     'mean': "%.4g" % np.mean(timeseries), 
+                                     'std': "%.4g" % np.std(timeseries)}
     del stats_dict['variable']
     with open(output, 'w') as outfile:
         yaml.dump(stats_dict, outfile, default_flow_style=False)
 
     
-make_stats_file('/results2/MIDOSS/forcing/SalishSeaCast/MF0/03jun18-04jun18/', 249, 342, '/results2/MIDOSS/forcing/SalishSeaCast/MF0/03jun18-04jun18/stats.yaml')
+make_stats_file('/results2/MIDOSS/forcing/SalishSeaCast/MF0/20jun18-21jun18/', 249, 342, '/results2/MIDOSS/forcing/SalishSeaCast/MF0/20jun18-21jun18/stats.yaml')
