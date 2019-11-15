@@ -38,6 +38,35 @@ def make_stats_file(path, GridX, GridY, output):
                                      'max': "%.4g" % np.max(timeseries),
                                      'mean': "%.4g" % np.mean(timeseries), 
                                      'std': "%.4g" % np.std(timeseries)}
+                if group == 'wind velocity X':
+                    windx = timeseries
+                if group == 'wind velocity Y':
+                    windy = timeseries
+                if group == 'velocity U':
+                    currentsu = timeseries
+                if group == 'velocity V':
+                    currentsv = timeseries
+                if group == 'Stokes U':
+                    stokesu = timeseries
+                if group == 'Stokes V':
+                    stokesv = timeseries
+
+    windspeed = np.mean(np.array([windx, windy]), axis=0)
+    stats_dict['wind speed'] = {'min': "%.4g" % np.min(windspeed),
+                                'max': "%.4g" % np.max(windspeed),
+                                'mean': "%.4g" % np.mean(windspeed),
+                                'std': "%.4g" % np.std(windspeed)}
+    currentsspeed = np.mean(np.array([currentsu, currentsv]), axis=0)
+    stats_dict['currents speed'] = {'min': "%.4g" % np.min(currentsspeed),
+                                    'max': "%.4g" % np.max(currentsspeed),
+                                    'mean': "%.4g" % np.mean(currentsspeed),
+                                    'std': "%.4g" % np.std(currentsspeed)}
+    stokesspeed = np.mean(np.array([stokesu, stokesv]), axis=0)
+    stats_dict['stokes speed'] = {'min': "%.4g" % np.min(stokesspeed),
+                                  'max': "%.4g" % np.max(stokesspeed),
+                                  'mean': "%.4g" % np.mean(stokesspeed),
+                                  'std': "%.4g" % np.std(stokesspeed)}
+    
     del stats_dict['variable']
     with open(output, 'w') as outfile:
         yaml.dump(stats_dict, outfile, default_flow_style=False)
